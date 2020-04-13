@@ -1,3 +1,4 @@
+
 const Employee = require("./lib/Employee.js");
 const Intern = require("./lib/Intern.js");
 const Manager = require("./lib/Manager.js");
@@ -13,6 +14,7 @@ let totalEmp = true;
 let i = 0;
 
 async function moreEmp() {
+  let temphtml;
   try {
     while (totalEmp) {
       await getInfo();
@@ -23,7 +25,8 @@ async function moreEmp() {
       });
       if (confirm.more.toUpperCase() == `NO`) {
         totalEmp = false;
-        builder(empList);
+        temphtml = await builder(empList);
+        console.log(temphtml)
       }
     }
   } catch (error) {
@@ -142,11 +145,12 @@ async function builder(empList) {
   let special;
   let hardSpecial;
   let textColor;
-  for(var i = 0; i<empList.length; i++){
+  let block;
+  for(var i = 1; i<empList.length; i++){
 
-    switch(empList[i].getRole){
+    switch(empList[i].getRole()){
       case `Intern`: 
-      borderColor = 'border-dark'
+      color = 'border-dark'
       textColor = 'text-dark'
       hardSpecial = `School`
       special = empList[i].getSchool()
@@ -159,9 +163,7 @@ async function builder(empList) {
       special = empList[i].getSchool()
       break;
     }
-
-
-    let block =`<div class="card ${color} mb-3" style="max-width: 18rem;">
+     return block =`<div class="card ${ color} mb-3" style="max-width: 18rem;">
     <div class="card-header">${empList[i].getRole()}</div>
     <div class="card-body ${textColor}">
       <h5 class="card-title">${empList[i].getName()}</h5>
@@ -176,10 +178,82 @@ async function builder(empList) {
     </div>
   </div>`
 
-  document.getElementsByClassName(`manager`).appendChild(block)
+    // let mainHTML = `<!doctype html>
+    // <html lang="en">
+    //   <head>
+    //     <!-- Required meta tags -->
+    //     <meta charset="utf-8">
+    //     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    //     <!-- Bootstrap CSS -->
+    //     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    //     <style>
+    //         .navbar{
+    //             background-color: #90e0ff;
+    //         }
+    
+    //         .col{
+    //             background-color: red;
+    //             border: 1px solid black
+    //         }
+    //         .row{
+    //             background-color: red;
+    //             border: 2px solid green;
+    //         }
+    //         .manager{
+    //             text-align: center;
+    //         }
+    //     </style>
+    
+    //     <title>Team Builder!</title>
+    //   </head>
+    //   <body>
+    //       <!-- Nav bar -->
+    //       <nav class="navbar">
+    //           <div class="container justify-content-center" id="nav">
+    //             My Team!
+    //           </div>
+    //     </nav>
+    
+    //       <!-- Main container -->
+    //     <div class="container">        
+    //         <!-- row1 -->
+    //         <div class="row">
+    //             <div class="col manager">
+    //                 ${block}
+    //             </div>
+    //         </div>
+    //         <!-- row2 -->
+    //         <div class="row">
+    //             <div class="col">
+    //                 row 2 col 1
+    //             </div>
+    //             <div class="col">
+    //                 row 2 col 2
+    //             </div>
+    //             <div class="col">
+    //                 row2 col 3
+    //             </div>
+    
+    //         </div>
+    
+    //     </div>
+    
+    //     <!-- Optional JavaScript -->
+    //     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    //     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    //     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    //     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    //     <script type="text/javascript" src="./app.js"></script>
+    //   </body>
+    // </html>
+    // `
+
 
   }
     
 }
 
 getManagerInfo();
+
+
