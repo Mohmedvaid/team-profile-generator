@@ -139,7 +139,7 @@ async function createEngineer(empData, temp) {
 
 //html builder
 
-async function builder(empList) {
+ function builder(empList) {
 
   let color;
   let special;
@@ -160,7 +160,7 @@ async function builder(empList) {
       color = `border-primary`
       textColor = 'text-primary'
       hardSpecial = `Github URL`
-      special = empList[i].getSchool()
+      special = empList[i].getGithub()
       break;
     }
      return block =`<div class="card ${ color} mb-3" style="max-width: 18rem;">
