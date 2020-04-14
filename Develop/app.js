@@ -159,6 +159,8 @@ function blockBuilder(empList) {
   let textColor;
   let block = [];
   let j = 0;
+
+
   for (var i = 1; i < empList.length; i++) {
     switch (empList[i].getRole()) {
       case `Intern`:
@@ -176,9 +178,7 @@ function blockBuilder(empList) {
         break;
     }
 
-    block[
-      j
-    ] = `<div class="col"><div class="card ${color} mb-3" style="max-width: 18rem;">
+    block[j] = `<div class="col"><div class="card ${color} mb-3" style="max-width: 18rem;">
     <div class="card-header">${empList[i].getRole()}</div>
     <div class="card-body ${textColor}">
       <h5 class="card-title">${empList[i].getName()}</h5>
@@ -201,13 +201,7 @@ function htmlBuilder(blockArr) {
   let finalHtml;
   let temphtml = "";
   for (var i = 0; i < blockArr.length; i++) {
-    if (i == 0 || i % 3 == 0) {
-      temphtml += '<div class="row">' + blockArr;
-    } else if (i % 2 == 0) {
-      temphtml += blockArr + "</div>";
-    } else {
       temphtml += blockArr[i];
-    }
   }
 
   finalHtml = `<!doctype html>
@@ -225,6 +219,9 @@ function htmlBuilder(blockArr) {
             }
             .manager{
                 text-align: center;
+            }
+            .col{
+              min-width: 300px;
             }
         </style>
     
@@ -246,7 +243,10 @@ function htmlBuilder(blockArr) {
                     MANAGER
                 </div>
             </div>
+            <div style= "display: flex; flex-wrap: wrap; " >
             ${temphtml}
+            </div>
+          
         </div>
     
         <!-- Optional JavaScript -->
