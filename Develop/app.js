@@ -26,6 +26,7 @@ async function moreEmp() {
         totalEmp = false;
         blockArr = await blockBuilder(empList);
         htmlBuilder(blockArr);
+        console.log(`Yay! Your index.html file has been generated in the 'output' directory!`);
       }
     }
   } catch (error) {
@@ -160,26 +161,45 @@ function blockBuilder(empList) {
   let block = [];
   let j = 0;
 
+  managerBlock = `<div class="col">
+  <div class="card border-dark mb-3" style="max-width: 18rem;">
+  <div class="card-header text-white bg-dark">${empList[0].getRole()}</div>
+  <div class="card-body text-dark">
+    <h5 class="card-title">${empList[0].getName()}</h5>
+    <dl class="row">
+    <ul class="list-unstyled">
+    <li>ID: ${empList[0].getId()}</li>
+    <li>Email: ${empList[0].getEmail()}</li>
+    <li>Office : ${empList[0].getOfficeNumber()}</li>
+  </ul>
+    </dl>
+  </div>
+</div>
+</div>`;
 
   for (var i = 1; i < empList.length; i++) {
     switch (empList[i].getRole()) {
       case `Intern`:
-        color = "border-dark";
+        color = "border-primary";
         textColor = "text-dark";
         hardSpecial = `School`;
+        headerCol= `bg-primary text-white`
         special = empList[i].getSchool();
         break;
 
       case `Engineer`:
-        color = `border-primary`;
-        textColor = "text-primary";
+        color = `border-success`;
+        textColor = "text-dark";
         hardSpecial = `Github URL`;
+        headerCol = `bg-success text-white`
         special = empList[i].getGithub();
         break;
     }
 
-    block[j] = `<div class="col"><div class="card ${color} mb-3" style="max-width: 18rem;">
-    <div class="card-header">${empList[i].getRole()}</div>
+    block[
+      j
+    ] = `<div class="col"><div class="card ${color} mb-3" style="max-width: 18rem;">
+    <div class="card-header ${headerCol}">${empList[i].getRole()}</div>
     <div class="card-body ${textColor}">
       <h5 class="card-title">${empList[i].getName()}</h5>
       <dl class="row">
@@ -201,7 +221,7 @@ function htmlBuilder(blockArr) {
   let finalHtml;
   let temphtml = "";
   for (var i = 0; i < blockArr.length; i++) {
-      temphtml += blockArr[i];
+    temphtml += blockArr[i];
   }
 
   finalHtml = `<!doctype html>
@@ -214,16 +234,18 @@ function htmlBuilder(blockArr) {
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <style>
-            .navbar{
-                background-color: #90e0ff;
-            }
-            .manager{
-                text-align: center;
-            }
-            .col{
-              min-width: 300px;
-            }
-        </style>
+        .navbar {
+          background-color: #90e0ff;
+        }
+        .col {
+          min-width: 300px;
+        }
+        .card {
+          margin: 0 auto; /* Added */
+          float: none; /* Added */
+          margin-bottom: 10px; /* Added */
+        }
+      </style>
     
         <title>Team Builder!</title>
       </head>
@@ -239,8 +261,8 @@ function htmlBuilder(blockArr) {
         <div class="container">        
             <!-- row1 -->
             <div class="row">
-                <div class="col manager">
-                    MANAGER
+                <div class="col ">
+                    ${managerBlock}
                 </div>
             </div>
             <div style= "display: flex; flex-wrap: wrap; " >
