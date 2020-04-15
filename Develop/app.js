@@ -13,8 +13,10 @@ let totalEmp = true;
 let i = 0;
 let blockArr;
 
+//check if more the user want to add more members or not
 async function moreEmp() {
   try {
+    //while totalEmp true keep running funftions
     while (totalEmp) {
       await getInfo();
 
@@ -34,7 +36,7 @@ async function moreEmp() {
   }
 }
 
-//to get manager's info
+//get manager's info
 async function getManagerInfo() {
   try {
     console.log(`Enter the team managers information!`);
@@ -63,6 +65,7 @@ async function getManagerInfo() {
   } catch (error) {
     console.log(error);
   }
+  //first index will be manager in the empList array
   empList[i] = new Manager(
     managerData.name,
     managerData.ID,
@@ -99,6 +102,7 @@ async function getInfo() {
         name: "role",
       },
     ]);
+    //check if the member is an Intern or Engineer
     await getSpecial(empData);
   } catch (err) {
     console.log(err);
@@ -130,7 +134,7 @@ async function getSpecial(empData) {
   }
 }
 
-//object builders
+//object builders will create the objects based on classes and save them in the  empList array
 async function createIntern(empData, temp) {
   empList[i] = new Intern(
     empData.name,
@@ -151,8 +155,7 @@ async function createEngineer(empData, temp) {
   i++;
 }
 
-//html builder
-
+//bloack builders will buld the html blocks for each member in the empList array
 function blockBuilder(empList) {
   let color;
   let special;
@@ -161,6 +164,7 @@ function blockBuilder(empList) {
   let block = [];
   let j = 0;
 
+  //index 0 is the manager
   managerBlock = `<div class="col">
   <div class="card border-dark mb-3" style="max-width: 18rem;">
   <div class="card-header text-white bg-dark">${empList[0].getRole()}</div>
@@ -177,6 +181,7 @@ function blockBuilder(empList) {
 </div>
 </div>`;
 
+//loop begins at 1 as index 0 is Manager
   for (var i = 1; i < empList.length; i++) {
     switch (empList[i].getRole()) {
       case `Intern`:
@@ -196,9 +201,7 @@ function blockBuilder(empList) {
         break;
     }
 
-    block[
-      j
-    ] = `<div class="col"><div class="card ${color} mb-3" style="max-width: 18rem;">
+    block[j] = `<div class="col"><div class="card ${color} mb-3" style="max-width: 18rem;">
     <div class="card-header ${headerCol}">${empList[i].getRole()}</div>
     <div class="card-body ${textColor}">
       <h5 class="card-title">${empList[i].getName()}</h5>
@@ -217,6 +220,7 @@ function blockBuilder(empList) {
   return block;
 }
 
+//take the blocks and embed them in the HTML tamplate
 function htmlBuilder(blockArr) {
   let finalHtml;
   let temphtml = "";
@@ -280,13 +284,16 @@ function htmlBuilder(blockArr) {
       </body>
     </html>
     `;
+    //generate the .html file
   htmlGenerator(finalHtml);
 }
 
+//file will be generated in output folder
 function htmlGenerator(finalHtml) {
   fs.writeFile("./output/index.html", finalHtml, function (err) {
     if (err) throw err;
   });
 }
 
+//application begins here
 getManagerInfo();
