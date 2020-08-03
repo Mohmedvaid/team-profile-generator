@@ -4,7 +4,6 @@ const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 
 const fs = require("fs");
-const axios = require("axios");
 const inquirer = require("inquirer");
 let empData;
 let managerData;
@@ -98,7 +97,7 @@ async function getInfo() {
       },
       {
         type: "input",
-        message: "Enter the employee role (Intern or Engineer ): ",
+        message: "Enter the employee role (Intern or Engineer): ",
         name: "role",
       },
     ]);
